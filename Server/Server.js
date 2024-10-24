@@ -85,7 +85,7 @@ app.use(passport.initialize());
 app.get('/employee/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
 
 app.get('/employee/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:5173/login', session: false }),
+  passport.authenticate('google', { failureRedirect: 'https://emp-flow-etm.vercel.app/login', session: false }),
   (req, res) => {
     // Successful authentication, redirect to home or generate token
     const accessToken = createAccessToken({ id: req.user._id, role: req.user.role });
