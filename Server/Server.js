@@ -46,7 +46,7 @@ app.use('/team', require('./routes/teamRoutes'));
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/employee/auth/google/callback"
+    callbackURL: process.env.NODE_ENV === 'production' ? 'https://emp-flow-etm-u6a2.vercel.app/employee/auth/google/callback' : '/employee/auth/google/callback'
 },
     async (accessToken, refreshToken, profile, done) => {
         try {
@@ -85,35 +85,42 @@ app.use(passport.initialize());
 app.get('/employee/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
 
 app.get('/employee/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'https://emp-flow-etm.vercel.app/login', session: false }),
-  (req, res) => {
-    // Successful authentication, redirect to home or generate token
-    const accessToken = createAccessToken({ id: req.user._id, role: req.user.role });
-    const refreshToken = createRefreshToken({ id: req.user._id, role: req.user.role });
-    // res.cookie('accessToken', accessToken, {
-    //   httpOnly: true,
-    //   sameSite: 'None',
-    //   secure: true
-    // });
-    res.cookie('refreshtoken', refreshToken, {
-        httpOnly: true,
-        sameSite: 'Strict',
-        path: '/employee/refresh_token',
-        secure: process.env.NODE_ENV === 'production'
-      });
-  
-      // Send access token to the client
-      res.cookie('accessToken', accessToken, {
-        httpOnly: true,
-        sameSite: 'None',
-        secure: true
-      });
-    //   res.json({
-    //     accessToken,
-    //     message: 'Authentication successful'
-    //   });
-    res.redirect('http://emp-flow-etm.vercel.app/dashboard');
-  }
+    passport.authenticate('google', {
+        failureRedirect: process.env.NODE_ENV === 'production'
+            ? 'https://emp-flow-etm.vercel.app/login'
+            : 'http://localhost:5173/login',
+        session: false
+    }),
+    (req, res) => {
+        // Successful authentication, redirect to home or generate token
+        const accessToken = createAccessToken({ id: req.user._id, role: req.user.role });
+        const refreshToken = createRefreshToken({ id: req.user._id, role: req.user.role });
+        // res.cookie('accessToken', accessToken, {
+        //   httpOnly: true,
+        //   sameSite: 'None',
+        //   secure: true
+        // });
+        res.cookie('refreshtoken', refreshToken, {
+            httpOnly: true,
+            sameSite: 'Strict',
+            path: '/employee/refresh_token',
+            secure: process.env.NODE_ENV === 'production'
+        });
+
+        // Send access token to the client
+        res.cookie('accessToken', accessToken, {
+            httpOnly: true,
+            sameSite: 'None',
+            secure: true
+        });
+        //   res.json({
+        //     accessToken,
+        //     message: 'Authentication successful'
+        //   });
+        res.redirect(process.env.NODE_ENV === 'production'
+            ? 'https://emp-flow-etm.vercel.app/dashboard'
+            : 'http://localhost:5173/dashboard');
+    }
 );
 
 app.listen(PORT, () => {
