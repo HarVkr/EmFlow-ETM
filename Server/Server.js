@@ -112,7 +112,7 @@ app.get('/employee/auth/google/callback',
     //     accessToken,
     //     message: 'Authentication successful'
     //   });
-    res.redirect('http://localhost:5173/dashboard');
+    res.redirect('http://emp-flow-etm.vercel.app/dashboard');
   }
 );
 
