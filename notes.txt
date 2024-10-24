@@ -1,0 +1,6 @@
+We will Use Protected Routes for the Admin to be able to access the Create Account feature, because in a company, only the Admin will have the Authority to create a new Employee!!
+
+
+
+12/10/24 -> Refresh Token is getting stored in the Backend (Postman) but not getting stored and displayed in the Frontend (globalstate logs not getting displayed etc).
+            Suggestion : Start with the other functionalites and see this later!
