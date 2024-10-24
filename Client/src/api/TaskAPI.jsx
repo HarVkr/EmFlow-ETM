@@ -5,7 +5,7 @@ const TaskAPI = (token) => {
   const createTask = async (task) => {
     try{
       console.log("Creating Task...");
-      const res = await api.post('http://localhost:5000/tasks/create-task',  task , {headers: { Authorization: `Bearer ${token}` }});
+      const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/tasks/create-task',  task , {headers: { Authorization: `Bearer ${token}` }});
       return res.data;
     }
     catch(err){
@@ -16,7 +16,7 @@ const TaskAPI = (token) => {
   const getTasks = async () => {
     try{
       console.log("Getting Tasks...");
-      const res = await api.get('http://localhost:5000/tasks/get-tasks', {headers: { Authorization: `Bearer ${token}` }});
+      const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/tasks/get-tasks', {headers: { Authorization: `Bearer ${token}` }});
       return res.data;
     }
     catch(err){
@@ -27,7 +27,7 @@ const TaskAPI = (token) => {
   const updateTaskStatus = async (taskID, status) => {
     try{
       console.log("Updating Task Status...");
-      const res = await api.put(`http://localhost:5000/tasks/update-task-status/${taskID}`,status, {headers: { Authorization: `Bearer ${token}` }});
+      const res = await api.put(`https://emp-flow-etm-u6a2.vercel.app/tasks/update-task-status/${taskID}`,status, {headers: { Authorization: `Bearer ${token}` }});
       return res.data;
     }
     catch(err){

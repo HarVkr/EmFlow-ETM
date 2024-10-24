@@ -5,7 +5,7 @@ const ManagerAPI = (token) => {
     // Helper Code:
     const getAssignedTasks = async () => {
         try {
-            const res = await api.get('http://localhost:5000/tasks/get-assigned-tasks', {
+            const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/tasks/get-assigned-tasks', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             return res.data;
@@ -29,7 +29,7 @@ const ManagerAPI = (token) => {
     //     if(token){
     //         const fetchAssignedTasks = async () => {
     //             try{
-    //                 const res = await axios.get('http://localhost:5000/tasks/get-assigned-tasks', {headers: {Authorization: `Bearer ${token}`}});
+    //                 const res = await axios.get('https://emp-flow-etm-u6a2.vercel.app/tasks/get-assigned-tasks', {headers: {Authorization: `Bearer ${token}`}});
     //                 //console.log("Assigned Tasks: ", res.data);
     //                 setAssignedTasks(res.data);
     //             }

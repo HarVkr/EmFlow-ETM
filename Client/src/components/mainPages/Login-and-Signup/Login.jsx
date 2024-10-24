@@ -19,7 +19,7 @@ export default function Login() {
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('http://localhost:5000/employee/login', { ...user });
+      const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/login', { ...user });
       console.log(user);
       console.log("Admin Logged In");
       //console.log(res.data.accessToken);
@@ -44,7 +44,7 @@ export default function Login() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('http://localhost:5000/employee/login', { ...user })
+      const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/login', { ...user })
       console.log(user);
       console.log("User Logged In");
       localStorage.setItem('firstLogin', true)
@@ -63,7 +63,7 @@ export default function Login() {
   const handleEmployeeCreation = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+      await axios.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
       console.log(user);
       console.log("Employee Created");
 
@@ -311,14 +311,14 @@ export default function Login() {
                       </div>
 
                     </div>
-                    {/* <a href="http://localhost:5000/employee/auth/google">
+                    {/* <a href="https://emp-flow-etm-u6a2.vercel.app/employee/auth/google">
                       <button>Login with Google</button>
                     </a> */}
                     <div className="mt-3 relative flex items-center justify-center">
                       <div className="border-t border-gray-300 w-full"></div>
                       <div className="absolute bg-white px-4 text-sm text-gray-500">or</div>
                     </div>
-                    <a href="http://localhost:5000/employee/auth/google">
+                    <a href="https://emp-flow-etm-u6a2.vercel.app/employee/auth/google">
                       <button className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition duration-200 flex items-center justify-center mt-5">
                         <img src="./google-icon.png" alt="Google" className="w-5 h-5 mr-2" />
                         Sign in with Google

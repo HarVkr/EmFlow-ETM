@@ -8,12 +8,12 @@ export default defineConfig({
   server : {
     proxy : {
       '/employee': {
-        target: 'http://localhost:5000',
+        target: 'https://emp-flow-etm-u6a2.vercel.app',
         changeOrigin: true,
         secure: false,
       },
       '/task': {
-        target: 'http://localhost:5000',
+        target: 'https://emp-flow-etm-u6a2.vercel.app',
         changeOrigin: true,
         secure: false,
       }

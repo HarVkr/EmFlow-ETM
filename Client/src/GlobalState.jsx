@@ -32,7 +32,7 @@ export const DataProvider = ({ children }) => {
         try{
             console.log("Refreshing the Token...");
 
-            const res = await api.get('http://localhost:5000/employee/refresh_token', {
+            const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/employee/refresh_token', {
                 withCredentials: true
             });
             console.log("Request Sent");
@@ -43,7 +43,7 @@ export const DataProvider = ({ children }) => {
             //     return;
             // }
 
-            // const res = await axios.post('http://localhost:5000/employee/refresh_token', {
+            // const res = await axios.post('https://emp-flow-etm-u6a2.vercel.app/employee/refresh_token', {
             //     token: refreshTokennew
             // }, {
             //     withCredentials: true

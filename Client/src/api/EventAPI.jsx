@@ -4,7 +4,7 @@ const EventAPI = (token) => {
   const getEvents = async () => {
     try{
       console.log("Getting Events...");
-      const res = await api.get('http://localhost:5000/events/get-events', {headers: { Authorization: `Bearer ${token}` }});
+      const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/events/get-events', {headers: { Authorization: `Bearer ${token}` }});
       console.log(res.data);
       return res.data;
     }
