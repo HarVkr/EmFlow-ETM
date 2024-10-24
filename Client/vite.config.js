@@ -25,4 +25,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    sourcemap: false, // Disable sourcemaps in production
+  },
 })
