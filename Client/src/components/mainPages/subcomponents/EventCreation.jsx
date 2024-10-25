@@ -85,11 +85,11 @@ export default function EventCreation() {
       console.log("Checking event times at:", now);
 
       events.forEach(event => {
-        const eventTime = new Date(event.eventDate).tz('Asia/Kolkata');
+        const eventTime = moment(event.eventDate).tz('Asia/Kolkata');
         const timeDiff = eventTime.diff(now2);
         const minutesDiff = Math.floor(timeDiff / (1000 * 60));
 
-        console.log(`Event: ${event.eventName}, Event Time: ${eventTime}, Time Difference: ${minutesDiff} minutes`);
+        console.log(`Event: ${event.eventName}, Event Time: ${eventTime.format()}, Time Difference: ${minutesDiff} minutes`);
 
         if (minutesDiff === 5) {
           console.log(`Reminder: Event "${event.eventName}" is starting in 5 minutes.`);
