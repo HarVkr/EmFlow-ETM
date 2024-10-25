@@ -162,7 +162,7 @@ export default function EventCreation() {
       eventDescription: newEvent.eventDescription,
       eventDate: newEvent.eventDate,
       eventLocation: newEvent.eventLocation,
-      creationDate: new Date().toISOString(), // Ensure creationDate is set
+      creationDate: moment().tz('Asia/Kolkata').format(), // Ensure creationDate is set
       invitedEmployees: invitedEmployeeIDs // Ensure invitedEmployees is an array
     }
     console.log("Created Event: ", createdEvent);
