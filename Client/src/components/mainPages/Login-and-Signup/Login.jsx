@@ -61,16 +61,42 @@ export default function Login() {
   }
 
   const handleEmployeeCreation = async (e) => {
+    // e.preventDefault();
+    // try {
+    //   console.log("Creating an Employee...");
+    //   const user = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+    //   console.log(user);
+    //   console.log("Employee Created");
+
+    // }
+    // catch (err) {
+    //   console.log(err);
+    // }
     e.preventDefault();
     try {
       console.log("Creating an Employee...");
-      const user = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
-      console.log(user);
+      const response = await api.post(
+        'https://emp-flow-etm-u6a2.vercel.app/employee/create-employee',
+        {
+          userID: user.userID,
+          password: user.password,
+          role
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
+      );
+      console.log("API Response:", response.data);
       console.log("Employee Created");
-
+      // Optionally reset the form
+      setUser({ userID: '', password: '' });
+      console.log("Employee created successfully!");
     }
     catch (err) {
-      console.log(err);
+      console.error("Error creating employee:", err);
+      alert(err.response?.data?.msg || "Error creating employee");
     }
   }
 
