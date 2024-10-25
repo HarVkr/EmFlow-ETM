@@ -91,7 +91,7 @@ const userCtrl = {
             //const hashedPassword = await bcrypt.hash(password, 10);
             const hashedPassword = await hashPassword(password);
             const employee = new employees({
-                userID, password: hashedPassword, role, teamID: teamID || null
+                userID, password: hashedPassword, role
             });
             await employee.save();
             
