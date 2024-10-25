@@ -70,7 +70,7 @@ export default function Login() {
 
     }
     catch (err) {
-      console.log(err.response.data.msg);
+      console.log(err);
     }
   }
 
