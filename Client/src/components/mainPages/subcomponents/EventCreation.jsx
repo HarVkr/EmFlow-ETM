@@ -111,13 +111,13 @@ export default function EventCreation() {
         const hasNotified = sessionStorage.getItem(notificationKey);
 
         if (timeDiff <= 5 && timeDiff > 0 && !hasNotified) {
-          console.log(`Reminder: Event "${event.eventName}" is starting in ${timeDiff} minutes.`);
+          alert(`Reminder: Event "${event.eventName}" is starting in ${timeDiff} minutes.`);
           setNotifications(prev => [...prev, { event, type: 'reminder' }]);
           sessionStorage.setItem(notificationKey, 'true');
         }
 
         if (timeDiff === 0 && !hasNotified) {
-          console.log(`Start: Event "${event.eventName}" is starting now.`);
+          alert(`Start: Event "${event.eventName}" is starting now.`);
           setNotifications(prev => [...prev, { event, type: 'start' }]);
           sessionStorage.setItem(notificationKey, 'true');
         }
