@@ -78,30 +78,54 @@ export default function EventCreation() {
   console.log(events);
 
   useEffect(() => {
+    // const checkEventTimes = () => {
+    //   const now = new Date();
+    //   const now2 = moment().tz('Asia/Kolkata');
+    //   console.log("Checking event times at:", now2.format());
+    //   console.log("Checking event times at:", now);
+
+    //   events.forEach(event => {
+    //     const eventTime = moment(event.eventDate).tz('Asia/Kolkata');
+    //     const timeDiff = eventTime.diff(now2);
+    //     const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+
+    //     console.log(`Event: ${event.eventName}, Event Time: ${eventTime.format()}, Time Difference: ${minutesDiff} minutes`);
+
+    //     if (minutesDiff === 5) {
+    //       console.log(`Reminder: Event "${event.eventName}" is starting in 5 minutes.`);
+    //       setNotifications(prev => [...prev, { event, type: 'reminder' }]);
+    //     } else if (minutesDiff === 0) {
+    //       console.log(`Start: Event "${event.eventName}" is starting now.`);
+    //       setNotifications(prev => [...prev, { event, type: 'start' }]);
+    //     }
+    //   });
     const checkEventTimes = () => {
-      const now = new Date();
-      const now2 = moment().tz('Asia/Kolkata');
-      console.log("Checking event times at:", now2.format());
-      console.log("Checking event times at:", now);
+      const now = moment().tz('Asia/Kolkata');
 
       events.forEach(event => {
         const eventTime = moment(event.eventDate).tz('Asia/Kolkata');
-        const timeDiff = eventTime.diff(now2);
-        const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+        const timeDiff = eventTime.diff(now, 'minutes'); // Calculate difference in minutes directly
 
-        console.log(`Event: ${event.eventName}, Event Time: ${eventTime.format()}, Time Difference: ${minutesDiff} minutes`);
+        // Store notification state in a ref to prevent duplicate notifications
+        const notificationKey = `${event._id}_${timeDiff}`;
+        const hasNotified = sessionStorage.getItem(notificationKey);
 
-        if (minutesDiff === 5) {
-          console.log(`Reminder: Event "${event.eventName}" is starting in 5 minutes.`);
+        if (timeDiff <= 5 && timeDiff > 0 && !hasNotified) {
+          console.log(`Reminder: Event "${event.eventName}" is starting in ${timeDiff} minutes.`);
           setNotifications(prev => [...prev, { event, type: 'reminder' }]);
-        } else if (minutesDiff === 0) {
+          sessionStorage.setItem(notificationKey, 'true');
+        }
+
+        if (timeDiff === 0 && !hasNotified) {
           console.log(`Start: Event "${event.eventName}" is starting now.`);
           setNotifications(prev => [...prev, { event, type: 'start' }]);
+          sessionStorage.setItem(notificationKey, 'true');
         }
       });
     };
 
-    const intervalId = setInterval(checkEventTimes, 60000); // Check every minute
+    const intervalId = setInterval(checkEventTimes, 30000); // Check every minute
+    checkEventTimes();
 
     return () => {
       console.log("Clearing interval for checking event times.");
@@ -320,14 +344,6 @@ export default function EventCreation() {
           </Card>
         ))}
       </div>
-      {notifications.map((notification, index) => (
-        <Notification
-          key={index}
-          event={notification.event}
-          type={notification.type}
-          onClose={() => removeNotification(index)}
-        />
-      ))}
     </div>
   )
 }
