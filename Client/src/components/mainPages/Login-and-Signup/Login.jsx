@@ -63,13 +63,13 @@ export default function Login() {
   const handleEmployeeCreation = async (e) => {
     e.preventDefault();
     try {
+      console.log("Creating an Employee...");
       await axios.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
       console.log(user);
       console.log("Employee Created");
 
     }
     catch (err) {
-      alert(err.response.data.msg);
       console.log(err.response.data.msg);
     }
   }
