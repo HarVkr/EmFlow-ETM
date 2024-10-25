@@ -79,7 +79,7 @@ const userCtrl = {
     },
     createEmployee: async (req, res) =>{
         try{
-            const {userID, password, role, teamID} = req.body;
+            const {userID, password, role} = req.body;
             if(!userID || !password || !role) return res.status(400).json({msg: "Please fill in all fields."});
 
             const adminExists = await employees.findOne({ role: 'Admin' });

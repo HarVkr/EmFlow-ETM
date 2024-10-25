@@ -210,7 +210,7 @@ export default function Login() {
                           <button
                             type="button"
                             onClick={() => setRole('Team Manager')}
-                            className={`flex-1 py-2 px-4 rounded-lg border ${role === 'Team Lead' ? 'bg-indigo-400 text-white' : 'bg-white text-gray-700'
+                            className={`flex-1 py-2 px-4 rounded-lg border ${role === 'Team Manager' ? 'bg-indigo-400 text-white' : 'bg-white text-gray-700'
                               }`}
                           >
                             Team Manager
