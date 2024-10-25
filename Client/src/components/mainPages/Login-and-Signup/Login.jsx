@@ -64,7 +64,7 @@ export default function Login() {
     e.preventDefault();
     try {
       console.log("Creating an Employee...");
-      await axios.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+      const user = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
       console.log(user);
       console.log("Employee Created");
 
