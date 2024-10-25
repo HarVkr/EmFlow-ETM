@@ -12,6 +12,9 @@ import { Label } from "@/components/ui/label"
 import EventAPI from '@/api/EventAPI'
 import { useMemo, useCallback, useEffect } from 'react'
 import { GlobalState } from '../../../GlobalState'
+import Notification from './EventNotification'
+import api from '../../../utils/axios'
+import moment from 'moment-timezone'
 // const mockEvents = [
 //   {
 //     id: 1,
@@ -58,8 +61,8 @@ export default function EventCreation() {
     eventLocation: '',
     invitedEmployees: ''
   })
-  const { getEvents } = useMemo(() => EventAPI(token), [token]);
-
+  const { getEvents, createEvent } = useMemo(() => EventAPI(token), [token]);
+  const [notifications, setNotifications] = useState([])
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -73,6 +76,39 @@ export default function EventCreation() {
   }, [getEvents]);
 
   console.log(events);
+
+  useEffect(() => {
+    const checkEventTimes = () => {
+      const now = new Date();
+      const now2 = moment().tz('Asia/Kolkata');
+      console.log("Checking event times at:", now2.format());
+      console.log("Checking event times at:", now);
+
+      events.forEach(event => {
+        const eventTime = new Date(event.eventDate).tz('Asia/Kolkata');
+        const timeDiff = eventTime.diff(now2);
+        const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+
+        console.log(`Event: ${event.eventName}, Event Time: ${eventTime}, Time Difference: ${minutesDiff} minutes`);
+
+        if (minutesDiff === 5) {
+          console.log(`Reminder: Event "${event.eventName}" is starting in 5 minutes.`);
+          setNotifications(prev => [...prev, { event, type: 'reminder' }]);
+        } else if (minutesDiff === 0) {
+          console.log(`Start: Event "${event.eventName}" is starting now.`);
+          setNotifications(prev => [...prev, { event, type: 'start' }]);
+        }
+      });
+    };
+
+    const intervalId = setInterval(checkEventTimes, 60000); // Check every minute
+
+    return () => {
+      console.log("Clearing interval for checking event times.");
+      clearInterval(intervalId);
+    };
+  }, [events]);
+
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString('en-US', {
@@ -90,23 +126,62 @@ export default function EventCreation() {
     setNewEvent(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const createdEvent = {
-      ...newEvent,
-      id: events.length + 1,
-      creationDate: new Date().toISOString(),
-      invitedEmployees: newEvent.invitedEmployees.split(',').map(emp => emp.trim())
+  const convertEmployeeuserIDstoMongoIDs = async (userIDs) => {
+    try {
+      const promises = userIDs.map(async (userID) => {
+        const response = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/get-employee-by-name', { userID }, { headers: { Authorization: `Bearer ${token}` } });
+        return response.data._id;
+      })
+      const results = await Promise.all(promises);
+      return results;
     }
-    setEvents([...events, createdEvent])
-    setNewEvent({
-      eventName: '',
-      eventID: '',
-      eventDescription: '',
-      eventDate: '',
-      eventLocation: '',
-      invitedEmployees: ''
-    })
+    catch (err) {
+      console.error("Error converting employee IDs to MongoDB IDs: ", err);
+      return [];
+    }
+  }
+
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+    console.log("Creating event:", newEvent);
+    const invitedEmployeeNames = newEvent.invitedEmployees.split(',').map(name => name.trim());
+    const invitedEmployeeIDs = await convertEmployeeuserIDstoMongoIDs(invitedEmployeeNames);
+    console.log("Invited Employees:", newEvent.invitedEmployees);
+    //const mongoIDs = await convertEmployeeuserIDstoMongoIDs(newEvent.invitedEmployees);
+    console.log('Mongo IDs:', invitedEmployeeIDs);
+
+    const createdEvent = {
+      // ...newEvent,
+      // id: events.length + 1,
+      // creationDate: new Date().toISOString(),
+      // invitedEmployees: newEvent.invitedEmployees.split(',').map(emp => emp.trim())
+      eventName: newEvent.eventName,
+      eventID: newEvent.eventID,
+      eventDescription: newEvent.eventDescription,
+      eventDate: newEvent.eventDate,
+      eventLocation: newEvent.eventLocation,
+      creationDate: new Date().toISOString(), // Ensure creationDate is set
+      invitedEmployees: invitedEmployeeIDs // Ensure invitedEmployees is an array
+    }
+    console.log("Created Event: ", createdEvent);
+    const res = await createEvent(createdEvent);
+    console.log("Response: ", res);
+    if (res) {
+      setEvents([...events, createdEvent]);
+      setNewEvent({
+        eventName: '',
+        eventID: '',
+        eventDescription: '',
+        eventDate: '',
+        eventLocation: '',
+        invitedEmployees: ''
+      });
+    }
+  }
+  const removeNotification = (index) => {
+    setNotifications(prev => prev.filter((_, i) => i !== index))
   }
 
   return (
@@ -195,7 +270,7 @@ export default function EventCreation() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ml-2">
         {events.map((event) => (
-          <Card key={event.id} className="flex flex-col">
+          <Card key={event._id} className="flex flex-col">
             <CardHeader>
               <CardTitle className="text-lg">{event.eventName}</CardTitle>
               <CardDescription className="flex items-center">
@@ -245,6 +320,14 @@ export default function EventCreation() {
           </Card>
         ))}
       </div>
+      {notifications.map((notification, index) => (
+        <Notification
+          key={index}
+          event={notification.event}
+          type={notification.type}
+          onClose={() => removeNotification(index)}
+        />
+      ))}
     </div>
   )
 }
