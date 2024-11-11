@@ -4,58 +4,31 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
-
-    services:
-      mongo:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '20.12.2'
-
-      - name: Wait for MongoDB to be ready
+          node-version: '18'
+          
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Run Tests
+        run: npm test
+        
+      - name: Build Project
+        run: npm run build
+        
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          for i in {1..30}; do
-            if mongo --eval 'db.runCommand({ ping: 1 })'; then
-              echo "MongoDB is ready"
-              break
-            fi
-            echo "Waiting for MongoDB to be ready..."
-            sleep 2
-          done
-
-      - name: Install dependencies
-        run: |
-          cd Client
-          npm install
-          cd ../Server
-          npm install
-
-      - name: Run tests
-        run: |
-          cd Server
-          npm test
-
-      - name: Build client
-        run: |
-          cd Client
-          npm run build
+          npm install -g vercel
+          vercel --prod --token $VERCEL_TOKEN
