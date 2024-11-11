@@ -49,6 +49,9 @@ export default defineConfig({
   },
   build: {
     sourcemap: false,
+  },
+  esbuild: {
+    sourcemap: false, // Ensure esbuild also does not generate source maps
   }
 })
 
