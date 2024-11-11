@@ -44,6 +44,8 @@ export default function ManDashboard() {
   const { getAssignedTasks } = useMemo(() => ManagerAPI(token), [token]);
   const { getEmployeeDatabyIDs } = useMemo(() => UserAPI(token), [token]);
 
+  console.log("Reached here");
+  
   useEffect(() => {
     const fetchTasks = async () => {
       try {
