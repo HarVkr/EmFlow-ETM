@@ -10,6 +10,12 @@
     "node": "^22.7.0",
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "argon2": "^0.41.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "firebase": "^10.13.1",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2"
   }
 }

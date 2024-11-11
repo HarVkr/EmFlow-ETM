@@ -1,0 +1,72 @@
+services:
+  # define the frontend service
+  # we can use any name for the service. A standard naming convention is to use "web" for the frontend
+  web:
+    # we use depends_on to specify that service depends on another service
+    # in this case, we specify that the web depends on the api service
+    # this means that the api service will be started before the web service
+    depends_on: 
+      - api
+    # specify the build context for the web service
+    # this is the directory where the Dockerfile for the web service is located
+    build: ./Client
+    # specify the ports to expose for the web service
+    # the first number is the port on the host machine
+    # the second number is the port inside the container
+    ports:
+      - 5173:5173
+    # specify the environment variables for the web service
+    # these environment variables will be available inside the container
+
+    # this is for docker compose watch mode
+    # anything mentioned under develop will be watched for changes by docker compose watch and it will perform the action mentioned
+    develop:
+      # we specify the files to watch for changes
+      watch:
+        # it'll watch for changes in package.json and package-lock.json and rebuild the container if there are any changes
+        - path: ./Client/package.json
+          action: rebuild
+        - path: ./Client/package-lock.json
+          action: rebuild
+        # it'll watch for changes in the frontend directory and sync the changes with the container real time
+        - path: ./Client
+          target: /app
+          action: sync
+
+  # define the api service/container
+  api: 
+    
+
+    # specify the build context for the api service
+    build: ./Server
+    
+    # specify the ports to expose for the api service
+    # the first number is the port on the host machine
+    # the second number is the port inside the container
+    ports: 
+      - 5000:5000
+
+    # specify environment variables for the api service
+    # for demo purposes, we're using a local mongodb instance
+    environment: 
+      - NODE_ENV=production
+      - MONGO_DB_CONNECTION_STRING=mongodb+srv://harshal:%40Harshal098765@etmdatabase.hehw0.mongodb.net/?retryWrites=true&w=majority&appName=ETMDatabase
+      - ACCESS_TOKEN_SECRET=SECRETTOKEN
+      - REFRESH_TOKEN_SECRET=REFRESHTOKEN
+      - GOOGLE_CLIENT_ID=67259356021-rfoudrmr91sr0ti1hmrgnuoufbd7bnam.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
+    
+    # establish docker compose watch mode for the api service
+    develop:
+      # specify the files to watch for changes
+      watch:
+        # it'll watch for changes in package.json and package-lock.json and rebuild the container and image if there are any changes
+        - path: ./Server/package.json
+          action: rebuild
+        - path: ./Server/package-lock.json
+          action: rebuild
+        
+        # it'll watch for changes in the backend directory and sync the changes with the container real time
+        - path: ./Server
+          target: /app
+          action: sync
