@@ -47,6 +47,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    sourcemap: true,
+  }
 })
 
 // import { defineConfig } from 'vite'
