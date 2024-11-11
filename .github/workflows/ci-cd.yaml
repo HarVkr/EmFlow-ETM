@@ -18,7 +18,7 @@ jobs:
           node-version: '20.11.1'
           
       - name: Install Dependencies
-        run: npm install
+        run: cd ./Client && npm install
         
       - name: Run Tests
         run: cd ./Client && npm test
