@@ -51,7 +51,6 @@ passport.use(new GoogleStrategy({
     async (accessToken, refreshToken, profile, done) => {
         try {
             let user = await employees.findOne({ userID: profile.displayName }); // Use name or profile.emails[0].value
-            console.log("Reached here");
             
             if (!user) {
                 // If user does not exist, create a new one with no password (since it's OAuth)
