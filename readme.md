@@ -42,6 +42,17 @@ To get started with EmpFlow-ETM, follow these steps:
     npm install
     ```
 
+## App Screenshots
+
+Here are some screenshots of the app:
+
+![Screenshot 1](app_images/Manager_Dashboard_CreateTasks.png)
+![Screenshot 2](app_images/Manager_Dashboard_Overview.png)
+![Screenshot 3](app_images/Manager_Dashboard_CreateTasks.png)
+![Screenshot 4](app_images/Manager_Dashboard_UpdateTasks.png)
+![Screenshot 5](app_images/Manager_Dashboard_Events.png)
+
+
 ## Usage
 
 After installing the dependencies, you can start the application by running:
