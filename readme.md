@@ -46,7 +46,7 @@ To get started with EmpFlow-ETM, follow these steps:
 
 Here are some screenshots of the app:
 
-![Screenshot 1](app_images/Manager_Dashboard_CreateTasks.png)
+![Screenshot 1](app_images/Login_Page.png)
 ![Screenshot 2](app_images/Manager_Dashboard_Overview.png)
 ![Screenshot 3](app_images/Manager_Dashboard_CreateTasks.png)
 ![Screenshot 4](app_images/Manager_Dashboard_UpdateTasks.png)
