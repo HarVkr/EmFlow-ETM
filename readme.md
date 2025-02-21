@@ -42,15 +42,20 @@ To get started with EmpFlow-ETM, follow these steps:
     npm install
     ```
 
-## App Screenshots
+## Snippets of Web App 
 
-Here are some screenshots of the app:
-
+#### Login Page
 ![Screenshot 1](app_images/Login_Page.png)
-![Screenshot 2](app_images/Manager_Dashboard_Overview.png)
-![Screenshot 3](app_images/Manager_Dashboard_CreateTasks.png)
-![Screenshot 4](app_images/Manager_Dashboard_UpdateTasks.png)
-![Screenshot 5](app_images/Manager_Dashboard_Events.png)
+#### Manager Dashboard Task Creation
+![Screenshot 2](app_images/Manager_Dashboard_CreateTasks.png)
+#### Manager Dashboard Performance Overview
+![Screenshot 3](app_images/Manager_Dashboard_Overview.png)
+#### Manager Dashboard Own Tasks
+![Screenshot 4](app_images/Manager_Dashboard_Tasks.png)
+#### Manager Dashboard Task Statuses 
+![Screenshot 5](app_images/Manager_Dashboard_Update_Tasks.png)
+#### Manager Dashboard Event Creation
+![Screenshot 6](app_images/Manager_Dashboard_Events.png)
 
 
 ## Usage
