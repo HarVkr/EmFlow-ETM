@@ -18,10 +18,12 @@ EmpFlow-ETM is an easy-to-use application designed to streamline employee task m
 
 ## Features
 
-- Task creation and assignment
-- Workflow management
+- Task Creation and Assignment
+- Tasks Progress Updation and Tracking
+- Event Creation and Real-time Notifications
 - Employee performance tracking
-- Real-time notifications
+- Tickets Creation and Assignment
+- Tickets Updation
 - Interactive dashboards
 - User-friendly interface
 
@@ -46,12 +48,14 @@ To get started with EmpFlow-ETM, follow these steps:
 
 #### Login Page
 ![Screenshot 1](app_images/Login_Page.png)
+#### Tasks Assigned to the Employee's Team
+![Screenshot 1](app_images/v2/Manager-Assigned-Tasks.png)
 #### Manager Dashboard Task Creation
-![Screenshot 2](app_images/Manager_Dashboard_CreateTasks.png)
-#### Manager Dashboard Performance Overview
-![Screenshot 3](app_images/Manager_Dashboard_Overview.png)
+![Screenshot 2](app_images/v2/Manager-Create-Tasks.png)
+#### Manager Dashboard Attendance and Performance Overview
+![Screenshot 3](app_images/v2/Manager-Attendance-Tasks-Performance.png)
 #### Manager Dashboard Own Tasks
-![Screenshot 4](app_images/Manager_Dashboard_Tasks.png)
+![Screenshot 4](app_images/v2/Manager_Dashboard_Tasks.png)
 #### Manager Dashboard Task Statuses 
 ![Screenshot 5](app_images/Manager_Dashboard_Update_Tasks.png)
 #### Manager Dashboard Event Creation
