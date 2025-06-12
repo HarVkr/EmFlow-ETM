@@ -25,16 +25,59 @@ require('dotenv').config();
 app.use(cookieParser());
 
 app.use(express.json());
+
+const allowedOrigins = [
+    'https://emp-flow-etm.vercel.app',      // Your frontend domain
+    'https://emp-flow-etm-u6a2.vercel.app', // Your backend domain (if needed)
+    'http://localhost:5173',                 // Local development
+    'http://localhost:3000',                 // Alternative local port
+    'http://localhost:5000'                  // Backend local port
+];
+
+// app.use(cors({
+//     origin: 'https://emp-flow-etm.vercel.app', // Allow requests from this origin
+//     credentials: true // Allow cookies to be sent
+// }));
 app.use(cors({
-    origin: 'https://emp-flow-etm.vercel.app', // Allow requests from this origin
-    credentials: true // Allow cookies to be sent
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.log('CORS blocked origin:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // Allow cookies to be sent
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
+// Add preflight handling for all routes
+app.options('*', cors());
+
 connectDB();
 
 
 app.get('/', (req, res) => {
     res.json('This is an Example API');
 })
+
+// Add this after your existing CORS configuration
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://emp-flow-etm.vercel.app');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    
+//     if (req.method === 'OPTIONS') {
+//         res.sendStatus(200);
+//     } else {
+//         next();
+//     }
+// });
 
 // Routes
 app.use('/employee', require('./routes/userRoutes'));
