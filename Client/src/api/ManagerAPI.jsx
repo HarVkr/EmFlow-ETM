@@ -5,7 +5,7 @@ const ManagerAPI = (token) => {
     // Helper Code:
     const getAssignedTasks = async () => {
         try {
-            const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/tasks/get-assigned-tasks', {
+            const res = await api.get('/tasks/get-assigned-tasks', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             return res.data;
@@ -19,8 +19,18 @@ const ManagerAPI = (token) => {
         const userData = await getUserData();
         return userData ? userData._id : null;
     }
-
-    return { getAssignedTasks, getManagerID };
+    const getManagerTeams = async () => {
+        try {
+            const res = await api.get('/team/manager-teams', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            return res.data;
+        } catch (err) {
+            console.error("Error fetching manager teams: ", err.response ? err.response.data.msg : err.message);
+            return [];
+        }
+    };
+    return { getAssignedTasks, getManagerID, getManagerTeams };
 
     // MY CODE:
     // const [assignedTasks, setAssignedTasks] = useState([]);
@@ -29,7 +39,7 @@ const ManagerAPI = (token) => {
     //     if(token){
     //         const fetchAssignedTasks = async () => {
     //             try{
-    //                 const res = await axios.get('https://emp-flow-etm-u6a2.vercel.app/tasks/get-assigned-tasks', {headers: {Authorization: `Bearer ${token}`}});
+    //                 const res = await axios.get('/tasks/get-assigned-tasks', {headers: {Authorization: `Bearer ${token}`}});
     //                 //console.log("Assigned Tasks: ", res.data);
     //                 setAssignedTasks(res.data);
     //             }
@@ -43,7 +53,7 @@ const ManagerAPI = (token) => {
 
     // return {
     //     //assignedTasks: [assignedTasks, setAssignedTasks]
-        
+
     // };
 }
 

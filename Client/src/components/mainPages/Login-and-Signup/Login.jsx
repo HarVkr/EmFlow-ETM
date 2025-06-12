@@ -19,7 +19,7 @@ export default function Login() {
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/login', { ...user });
+      const res = await api.post('/employee/login', { ...user });
       console.log(user);
       console.log("Admin Logged In");
       //console.log(res.data.accessToken);
@@ -43,28 +43,54 @@ export default function Login() {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    // try {
+    //   const res = await api.post('/employee/login', { ...user })
+    //   console.log("Login response:", res.data);
+
+    //   console.log(user);
+    //   console.log("User Logged In");
+    //   localStorage.setItem('firstLogin', true)
+    //   setToken(res.data.accessToken);
+    //   console.log("reached here");
+    //   navigate('/dashboard')
+    //   //window.location.href = '/'
+    // }
+    // catch (err) {
+    //   console.log("Error: ", err.response ? err.response.data.msg : err.message);
+    //   alert(err.response.data.msg);
+    // }
+    // console.log("Login");
     try {
-      const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/login', { ...user })
-      console.log(user);
-      console.log("User Logged In");
-      localStorage.setItem('firstLogin', true)
-      setToken(res.data.accessToken);
-      console.log("reached here");
-      navigate('/dashboard')
-      //window.location.href = '/'
+        const res = await api.post('/employee/login', { ...user });
+        console.log("Login response:", res.data);
+        
+        // Ensure token is stored
+        if (res.data.accessToken) {
+            localStorage.setItem('firstLogin', 'true');
+            localStorage.setItem('accessToken', res.data.accessToken);
+            console.log("Token stored:", res.data.accessToken.substring(0, 15) + "...");
+            
+            // Update context state
+            setToken(res.data.accessToken);
+            
+            // Navigate after token is set
+            navigate('/dashboard');
+        } else {
+            console.error("No access token received in login response");
+            alert("Login failed - no token received");
+        }
     }
     catch (err) {
-      console.log("Error: ", err.response ? err.response.data.msg : err.message);
-      alert(err.response.data.msg);
+        console.error("Login error:", err);
+        alert(err.response?.data?.msg || "Login failed");
     }
-    console.log("Login");
   }
 
   const handleEmployeeCreation = async (e) => {
     // e.preventDefault();
     // try {
     //   console.log("Creating an Employee...");
-    //   const user = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+    //   const user = await api.post('/employee/create-employee', { ...user, role }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
     //   console.log(user);
     //   console.log("Employee Created");
 
@@ -76,7 +102,7 @@ export default function Login() {
     try {
       console.log("Creating an Employee...");
       const response = await api.post(
-        'https://emp-flow-etm-u6a2.vercel.app/employee/create-employee',
+        '/employee/create-employee',
         {
           userID: user.userID,
           password: user.password,
@@ -337,14 +363,14 @@ export default function Login() {
                       </div>
 
                     </div>
-                    {/* <a href="https://emp-flow-etm-u6a2.vercel.app/employee/auth/google">
+                    {/* <a href="/employee/auth/google">
                       <button>Login with Google</button>
                     </a> */}
                     <div className="mt-3 relative flex items-center justify-center">
                       <div className="border-t border-gray-300 w-full"></div>
                       <div className="absolute bg-white px-4 text-sm text-gray-500">or</div>
                     </div>
-                    <a href="https://emp-flow-etm-u6a2.vercel.app/employee/auth/google">
+                    <a href="/employee/auth/google">
                       <button className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition duration-200 flex items-center justify-center mt-5">
                         <img src="./google-icon.png" alt="Google" className="w-5 h-5 mr-2" />
                         Sign in with Google

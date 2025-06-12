@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(cors({
-    origin: 'https://emp-flow-etm.vercel.app', // Allow requests from this origin
+    origin: 'http://localhost:5173', // Allow requests from this origin
     credentials: true // Allow cookies to be sent
 }));
 connectDB();
@@ -41,12 +41,13 @@ app.use('/employee', require('./routes/userRoutes'));
 app.use('/tasks', require('./routes/taskRoutes'));
 app.use('/events', require('./routes/eventRoutes'));
 app.use('/team', require('./routes/teamRoutes'));
+app.use('/tickets', require('./routes/ticketRoutes'));
 
 // O-Auth Integration
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.NODE_ENV === 'production' ? 'https://emp-flow-etm-u6a2.vercel.app/employee/auth/google/callback' : '/employee/auth/google/callback'
+    callbackURL: process.env.NODE_ENV === 'production' ? '/employee/auth/google/callback' : '/employee/auth/google/callback'
 },
     async (accessToken, refreshToken, profile, done) => {
         try {

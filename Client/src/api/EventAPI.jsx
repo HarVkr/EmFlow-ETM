@@ -4,7 +4,7 @@ const EventAPI = (token) => {
   const getEvents = async () => {
     try{
       console.log("Getting Events...");
-      const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/events/get-events', {headers: { Authorization: `Bearer ${token}` }});
+      const res = await api.get('/events/get-events', {headers: { Authorization: `Bearer ${token}` }});
       console.log(res.data);
       return res.data;
     }
@@ -16,7 +16,7 @@ const EventAPI = (token) => {
   const createEvent = async (event) => {
     try{
       console.log("Creating Event...");
-      const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/events/create-event', event, {headers: { Authorization: `Bearer ${token}` }});
+      const res = await api.post('/events/create-event', event, {headers: { Authorization: `Bearer ${token}` }});
       console.log(res.data);
       return res.data;
     }

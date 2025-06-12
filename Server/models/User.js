@@ -29,7 +29,15 @@ const UserSchema = new mongoose.Schema({
     teamID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'teams'
-    }
+    },
+    tickets : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tickets'
+    }],
+    assignedTickets : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tickets'
+    }]
 });
 
 module.exports = mongoose.model('employees', UserSchema);

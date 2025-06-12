@@ -5,6 +5,10 @@ const TeamSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    teamID: {
+        type: String,
+        unique: true
+    },
     managerID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'employees',
@@ -13,7 +17,11 @@ const TeamSchema = new mongoose.Schema({
     members: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'employees'
-    }]
+    }],
+    tasks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tasks'
+    }],
 });
 
 module.exports = mongoose.model('teams', TeamSchema);

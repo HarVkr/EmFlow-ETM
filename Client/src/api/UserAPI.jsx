@@ -13,7 +13,7 @@
 //             const getUser = async () => {
 //                 try{
 //                     console.log("Getting User Data...");
-//                     const res = await axios.get('https://emp-flow-etm-u6a2.vercel.app/employee/get-user', {
+//                     const res = await axios.get('/employee/get-user', {
 //                         headers: { Authorization: `Bearer ${token}`}
 //                     });
 //                     // setisLogged(true);
@@ -50,7 +50,7 @@ const UserAPI = (token) => {
     const getUserData = async () => {
         try {
             console.log("Getting User Data...");
-            const res = await api.get('https://emp-flow-etm-u6a2.vercel.app/employee/get-user', {
+            const res = await api.get('/employee/get-user', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             return res.data;
@@ -59,84 +59,119 @@ const UserAPI = (token) => {
             return null;
         }
     };
-    const getEmployeeDatabyIDs = async (ids) => {
-                            // for (let i = 0; i < ids.length; i++) {
-                            //     try {
-                            //         console.log("Getting Employee Data...");
-                            //         const res = await axios.get(`https://emp-flow-etm-u6a2.vercel.app/employee/get-employee/${ids[i]}`, {
-                            //             headers: { Authorization: `Bearer ${token}` }
-                            //         });
-                            //         setEmployeeData([...employeeData, res.data]);
-                                    
-                            //     } catch (err) {
-                            //         console.error("Error getting employee data: ", err);
-                            //         return null;
-                            //     }
-                            // }
+    const getEmployeeDatabyIDs = async (employeeIDs) => {
+        // for (let i = 0; i < ids.length; i++) {
+        //     try {
+        //         console.log("Getting Employee Data...");
+        //         const res = await axios.get(`/employee/get-employee/${ids[i]}`, {
+        //             headers: { Authorization: `Bearer ${token}` }
+        //         });
+        //         setEmployeeData([...employeeData, res.data]);
+
+        //     } catch (err) {
+        //         console.error("Error getting employee data: ", err);
+        //         return null;
+        //     }
+        // }
+        // try {
+        //     console.log("Getting Employee Data...");
+        //     const promises = ids.map(id => 
+        //         api.get(`/employee/get-employee/${id}`, {
+        //             headers: { Authorization: `Bearer ${token}` }
+        //         })
+        //     );
+        //     console.log("Preparing results..");
+
+        //     const results = await Promise.all(promises);
+        //     // Helper Code:
+        //     return results.map(res => res.data);
+
+
+        //     // My Code:
+        //     // const employeeData = results.map(res => res.data);
+        //     // //setEmployeeData(employeeData);
+        //     // return employeeData;
+        // } catch (err) {
+        //     console.error("Error getting employee data: ", err);
+        //     return null;
+        // }
         try {
-            console.log("Getting Employee Data...");
-            const promises = ids.map(id => 
-                api.get(`https://emp-flow-etm-u6a2.vercel.app/employee/get-employee/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
+            // Normalize IDs to strings
+            const validIDs = employeeIDs.map(id => {
+                if (id && typeof id === 'object' && id._id) {
+                    return id._id.toString();
+                } else if (id && typeof id === 'object' && id.id) {
+                    return id.id.toString();
+                }
+                return id.toString();
+            });
+            // Get the token directly from localStorage
+            const token = localStorage.getItem('accessToken');
+            if (!token) {
+                throw new Error('No authentication token found');
+            }
+            console.log("Using token for API calls:", token.substring(0, 15) + "...");
+        
+            // Debug the request being made
+            console.log("Making GET requests to:", validIDs.map(id => `/employee/get-employee/${id}`));
+
+            // Make the requests with explicit headers
+            const responses = await Promise.all(
+                validIDs.map(async (id) => {
+                    return await api.get(`/employee/get-employee/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
                 })
             );
-            console.log("Preparing results..");
-            
-            const results = await Promise.all(promises);
-            // Helper Code:
-            return results.map(res => res.data);
-
-
-            // My Code:
-            // const employeeData = results.map(res => res.data);
-            // //setEmployeeData(employeeData);
-            // return employeeData;
-        } catch (err) {
-            console.error("Error getting employee data: ", err);
-            return null;
+            return responses.map(res => res.data);
+        } catch (error) {
+            console.error("Error getting employee data: ", error);
+            throw error;
         }
     };
     const getEmployeeNamebyID = async (id) => {
-        try{
+        try {
             console.log("Getting Employee Name...");
-            const res = await api.post(`https://emp-flow-etm-u6a2.vercel.app/employee/get-employee-userid/`, id ,{
+            const res = await api.post(`/employee/get-employee-userid/`, id, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             res.data.userID;
         }
-        catch(err){
+        catch (err) {
             console.error("Error getting employee name by ID: ", err);
             return null;
         }
     }
     const getTeamTasks = async (teamID) => {
-        try{
+        try {
             console.log("Getting Team Tasks...");
-            const res = await api.get(`https://emp-flow-etm-u6a2.vercel.app/team/${teamID}/get-tasks`, {
+            const res = await api.get(`/team/${teamID}/get-tasks`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             return res.data;
-            
+
         }
-        catch(err){
+        catch (err) {
             console.error("Error getting team tasks: ", err.response ? err.response.data.msg : err.message);
             return null;
         }
     }
     const logoutUser = async () => {
-        try{
+        try {
             console.log("Logging Out...");
-            const res = await api.post('https://emp-flow-etm-u6a2.vercel.app/employee/logout', {
+            const res = await api.post('/employee/logout', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             return res.data;
         }
-        catch(err){
+        catch (err) {
             console.error("Error logging out: ", err);
             return null;
         }
     }
-    return { getUserData, getEmployeeDatabyIDs, getEmployeeNamebyID, getTeamTasks, logoutUser};
+    return { getUserData, getEmployeeDatabyIDs, getEmployeeNamebyID, getTeamTasks, logoutUser };
 };
 
 export default UserAPI;

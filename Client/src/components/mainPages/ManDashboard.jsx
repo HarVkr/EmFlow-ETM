@@ -79,10 +79,6 @@ export default function ManDashboard() {
     fetchEmployeeData();
   }, [allemployeeIDs, getEmployeeDatabyIDs]);
 
-  // const getEmployeeTasks = (employeeId) => {
-  //   return assignedTasks.filter(task => task.employeeID === employeeId);
-  // }
-
   console.log(employeeData);
 
   const getEmployeeTasks = useCallback((employeeId) => {
@@ -93,93 +89,71 @@ export default function ManDashboard() {
     return name.split(' ').join('').toLowerCase() + '@gmail.com';
   }
 
-  // My Code:
-  //const totalPages = Math.ceil(employeeData.length / itemsPerPage);
-  // const paginatedEmployees = employeeData.slice(
-  //   (page - 1) * itemsPerPage,
-  //   page * itemsPerPage
-  // );
-
-  // Helper: 
   const totalPages = Math.ceil(employeeData.length / itemsPerPage);
   const paginatedEmployees = useMemo(() =>
     employeeData.slice((page - 1) * itemsPerPage, page * itemsPerPage),
     [employeeData, page, itemsPerPage]
   );
   console.log(paginatedEmployees);
+
   if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-
-  // My Code: 
-  //   const state = useContext(GlobalState);
-  //   const [token] = state.token;
-  //   const [employeeTasks, setEmployeeTasks] = useState([]);
-  //   //console.log(token);
-  //   const { assignedTasks: [assignedTasks] } = ManagerAPI(token);
-
-  //   console.log("Assigned Tasks: ", assignedTasks);
-
-  //   const [employeeIDs, setEmployeeIDs] = useState([]);
-  //   const { getEmployeeDatabyIDs } = UserAPI(token);
-  //   const [employeeData, setEmployeeData] = useState([]);
-
-
-  // const [page, setPage] = useState(1)
-  // const itemsPerPage = 5
-  //const totalPages = Math.ceil(assignedTaskstasks.length / itemsPerPage)
-
-  //   const paginatedEmployees = dummyEmployees.slice(
-  //     (page - 1) * itemsPerPage,
-  //     page * itemsPerPage
-  //   )
-
-  //   // const getEmployeeIDS = () => {
-  //   //   const ids = [];
-  //   //   for (let i = 0; i < assignedTasks.length; i++) {
-  //   //     if (!ids.includes(assignedTasks[i].employeeID)) {
-  //   //       ids.push(assignedTasks[i].employeeID);
-  //   //     }
-  //   //   }
-  //   //   setEmployeeIDs(ids);
-  //   // }
-  //   // getEmployeeIDS();
-
-  // //   useEffect(() => {
-  // //     let isMounted = true; // Flag to check if the component is mounted
-
-  // //     const fetchEmployeeData = async () => {
-  // //         const ids = employeeIDs; // Replace with actual IDs
-  // //         const data = await getEmployeeDatabyIDs(ids);
-  // //         if (isMounted && data) { // Check if the component is still mounted before updating the state
-  // //             setEmployeeData(data);
-  // //             setIsLoading(false);
-  // //         }
-  // //     };
-
-  // //     fetchEmployeeData();
-
-  // //     return () => {
-  // //         isMounted = false; // Cleanup function to set the flag to false when the component unmounts
-  // //     };
-  // // }, [getEmployeeDatabyIDs]);
-
-
-
-  // //   const getEmployeeTasks = (employeeId) => {
-  // //     return tasks.filter(task => task.employeeID === employeeId)
-  // //   }
-
-  // //   // const getEmployeeDatabyIDs = async (ids) => {
-  // //   //   const userAPI = UserAPI(token);
-  // //   //   const employeeData = await userAPI.getEmployeeDatabyIDs(ids);
-  // //   //   console.log(employeeData);
-  // //   // }
-  // //   getEmployeeDatabyIDs(employeeIDs);
-
-  if (assignedTasks.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full p-8 gap-10 animate-pulse">
+        {/* Dashboard header skeleton */}
+        <div className="h-8 w-48 bg-gray-200 rounded-md mb-6"></div>
+        
+        {/* Assigned Tasks table skeleton */}
+        <div className="bg-white rounded-lg shadow mb-10">
+          <div className="p-4 border-b">
+            <div className="h-7 w-40 bg-gray-200 rounded-md"></div>
+          </div>
+          
+          <div className="p-4">
+            {/* Table header skeleton */}
+            <div className="flex border-b py-3">
+              <div className="w-1/3 h-4 bg-gray-200 rounded-md"></div>
+              <div className="w-1/6 h-4 bg-gray-200 rounded-md mx-2"></div>
+              <div className="w-1/6 h-4 bg-gray-200 rounded-md ml-auto"></div>
+              <div className="w-1/6 h-4 bg-gray-200 rounded-md ml-2"></div>
+            </div>
+            
+            {/* Table rows skeleton */}
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="flex items-center py-4 border-b">
+                <div className="flex items-center">
+                  <div className="h-10 w-10 rounded-full bg-gray-200 mr-3"></div>
+                  <div>
+                    <div className="h-4 w-24 bg-gray-200 rounded-md"></div>
+                    <div className="h-3 w-32 bg-gray-200 rounded-md mt-2"></div>
+                  </div>
+                </div>
+                <div className="h-4 w-16 bg-gray-200 rounded-md mx-6"></div>
+                <div className="h-4 w-8 bg-gray-200 rounded-md ml-auto mr-4"></div>
+                <div className="h-6 w-16 bg-gray-200 rounded-full mr-2"></div>
+                <div className="h-8 w-8 rounded-md bg-gray-200"></div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Pagination skeleton */}
+          <div className="flex items-center justify-between px-4 py-4 border-t">
+            <div className="h-8 w-24 bg-gray-200 rounded-md"></div>
+            <div className="flex items-center space-x-2">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-8 w-10 bg-gray-200 rounded-md"></div>
+              ))}
+            </div>
+            <div className="h-8 w-24 bg-gray-200 rounded-md"></div>
+          </div>
+        </div>
+        
+        {/* Charts area skeleton */}
+        <div className="flex flex-row justify-between w-full gap-10">
+          <div className="w-1/2 h-80 bg-gray-200 rounded-lg"></div>
+          <div className="w-1/2 h-80 bg-gray-200 rounded-lg"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -200,20 +174,10 @@ export default function ManDashboard() {
           </TableHeader>
           <TableBody>
             {paginatedEmployees.map((employee) => {
-              {/* console.log(employee);
-              console.log(employee.tasks);
-              console.log(employee.tasks.length);
-              console.log(employee._id);
-              console.log(employee.role); */}
-              //const employeeTasks = getEmployeeTasks(employee._id);
               return (
                 <TableRow key={employee._id}>
                   <TableCell className="font-medium">
                     <div className="flex items-center">
-                      {/* <Avatar className="h-10 w-10 mr-3">
-                        <AvatarImage src={employee.avatar} alt={employee.name} />
-                        <AvatarFallback>{employee.name.charAt(0)}</AvatarFallback>
-                      </Avatar> */}
                       <div>
                         <div>{employee.userID}</div>
                         <div className="text-sm text-gray-500">{makeEmailfromName(employee.userID)}</div>
@@ -222,7 +186,6 @@ export default function ManDashboard() {
                   </TableCell>
                   <TableCell>
                     <div>{employee.role}</div>
-                    {/* <div className="text-sm text-gray-500">{employee.subRole}</div> */}
                   </TableCell>
                   <TableCell className="text-right">{employee.tasks.length}</TableCell>
                   <TableCell className="text-right">
@@ -291,7 +254,7 @@ export default function ManDashboard() {
           </Button>
         </div>
       </div>
-      <div className='flex flex-row justify-between w-full gap-10'>
+      <div className='flex flex-row justify-between gap-10'>
         <MyAttendance />
         <MonthlyTaskPerformance />
       </div>
