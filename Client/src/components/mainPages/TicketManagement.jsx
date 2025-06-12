@@ -14,7 +14,7 @@ import CreateTicketForm from './subcomponents/CreateTicketForm';
 import TicketCard from './subcomponents/TicketCard';
 import TicketDetailsModal from './subcomponents/TicketDetailsModal';
 import TicketStatistics from './subcomponents/TicketStatistics';
-import UpdateTickets from './subcomponents/UpdateTickets';
+import UpdateTickets from './subcomponents/updateTickets';
 
 const TicketManagement = () => {
     const state = useContext(GlobalState);
