@@ -57,7 +57,7 @@ To get started with EmpFlow-ETM, follow these steps:
 #### Manager Dashboard Assigned Tasks to their Team
 ![Screenshot 4](app_images/v2/Manager-Assigned-Tasks.png)
 #### Employee (Manager/Team Member) Own Tasks Updation and Tracking
-![Screenshot 5](app_images/Manager-Update-Tasks.png)
+![Screenshot 5](app_images/v2/Manager-Update-Tasks.png)
 #### Employee Tickets Management
 ![Screenshot 6](app_images/v2/Employee-Ticket-Management.png)
 #### Employee Tickets View
@@ -65,9 +65,7 @@ To get started with EmpFlow-ETM, follow these steps:
 #### Employee Ticket Updation
 ![Screenshot 6](app_images/v2/Employee-Ticket-Updation.png)
 #### Manager Dashboard Event Creation
-![Screenshot 6](app_images/Manager_Dashboard_Events.png)
-#### Manager Dashboard Event Creation
-![Screenshot 6](app_images/Manager_Dashboard_Events.png)
+![Screenshot 6](app_images/v2/Employee-Event-Display-and-Creation.png)
 
 
 ## Usage
