@@ -61,11 +61,11 @@ To get started with EmpFlow-ETM, follow these steps:
 #### Employee Tickets Management
 ![Screenshot 6](app_images/v2/Employee-Ticket-Management.png)
 #### Employee Tickets View
-![Screenshot 6](app_images/v2/Tickets.png)
+![Screenshot 7](app_images/v2/Tickets.png)
 #### Employee Ticket Updation
-![Screenshot 6](app_images/v2/Employee-Ticket-Updation.png)
+![Screenshot 8](app_images/v2/Employee-Ticket-Updation.png)
 #### Manager Dashboard Event Creation
-![Screenshot 6](app_images/v2/Employee-Event-Display-and-Creation.png)
+![Screenshot 9](app_images/v2/Employee-Event-Display-and-Creation.png)
 
 
 ## Usage
