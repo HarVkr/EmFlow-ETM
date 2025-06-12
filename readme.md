@@ -49,15 +49,23 @@ To get started with EmpFlow-ETM, follow these steps:
 #### Login Page
 ![Screenshot 1](app_images/Login_Page.png)
 #### Tasks Assigned to the Employee's Team
-![Screenshot 1](app_images/v2/Manager-Assigned-Tasks.png)
+![Screenshot 1](app_images/v2/Employee-Team-Tasks.png)
 #### Manager Dashboard Task Creation
 ![Screenshot 2](app_images/v2/Manager-Create-Tasks.png)
 #### Manager Dashboard Attendance and Performance Overview
 ![Screenshot 3](app_images/v2/Manager-Attendance-Tasks-Performance.png)
-#### Manager Dashboard Own Tasks
-![Screenshot 4](app_images/v2/Manager_Dashboard_Tasks.png)
-#### Manager Dashboard Task Statuses 
-![Screenshot 5](app_images/Manager_Dashboard_Update_Tasks.png)
+#### Manager Dashboard Assigned Tasks to their Team
+![Screenshot 4](app_images/v2/Manager-Assigned-Tasks.png)
+#### Employee (Manager/Team Member) Own Tasks Updation and Tracking
+![Screenshot 5](app_images/Manager-Update-Tasks.png)
+#### Employee Tickets Management
+![Screenshot 6](app_images/v2/Employee-Ticket-Management.png)
+#### Employee Tickets View
+![Screenshot 6](app_images/v2/Tickets.png)
+#### Employee Ticket Updation
+![Screenshot 6](app_images/v2/Employee-Ticket-Updation.png)
+#### Manager Dashboard Event Creation
+![Screenshot 6](app_images/Manager_Dashboard_Events.png)
 #### Manager Dashboard Event Creation
 ![Screenshot 6](app_images/Manager_Dashboard_Events.png)
 
