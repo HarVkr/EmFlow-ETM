@@ -108,3 +108,7 @@ EmFlow-ETM is licensed under the MIT License. See the [LICENSE](LICENSE) file fo
 For any questions or inquiries, please contact the project maintainer:
 
 - **GitHub**: [HarVkr](https://github.com/HarVkr)
+
+### Sample Login for Verification: 
+1. Team Manager: Username: Nick Fury. Password: nickfury
+2. Team Member: Username: Vision. Password: vision
